@@ -14,4 +14,4 @@ const fs = require("fs");
 // console.log(orgData);
 
 //?to rename the file
-fs.renameSync("read.txt","readwrite.txt");
+// fs.renameSync("read.txt","readwrite.txt");
