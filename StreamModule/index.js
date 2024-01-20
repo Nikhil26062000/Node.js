@@ -16,18 +16,21 @@ server.on("request",(req,res)=>{
     //? Now reading data using Straem
     const rstream = fs.createReadStream("read.txt");
 
-    rstream.on("data",(chunkdata)=>{
-        res.write(chunkdata);
-    })
+    // rstream.on("data",(chunkdata)=>{
+    //     res.write(chunkdata);
+    // })
 
-    rstream.on("end",()=>{
-        res.end();
-    })
+    // rstream.on("end",()=>{
+    //     res.end();
+    // })
 
-    rstream.on("error",(err)=>{
-        console.error(err);
-        res.end(err.message);
-    })
+    // rstream.on("error",(err)=>{
+    //     console.error(err);
+    //     res.end(err.message);
+    // })
+
+    //! Another way
+    rstream.pipe(res);
 })
 
 server.listen(8000,"127.0.0.1",()=>{
