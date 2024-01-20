@@ -1,8 +1,15 @@
 
+const path = require('path');
 
 const express = require('express');
 
 const app = express();
+
+console.log(path.join(__dirname, '../public'));
+const staticPath = path.join(__dirname, '../public')
+
+//! Using Built-in Middleware to use static file
+app.use(express.static(staticPath));
 
 app.get("/",(req,res) => {
     res.send("Hello World!");
