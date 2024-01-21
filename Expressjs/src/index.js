@@ -40,6 +40,18 @@ app.get('/about',(req, res)=>{
 //     res.send("Welcome to about page");
 // })
 
+app.get("/about/*",(req,res) => {
+    res.render("error",{
+        errorMessage: "This about us page doesn't found"
+    });
+})
+
+app.get("*",(req,res) => {
+    res.render("error",{
+        errorMessage: "404 error page"
+    });
+})
+
 app.listen(3000,() => {
     console.log("Listen");
 })
