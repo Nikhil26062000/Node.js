@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 /*
 
  ? This is also a way using Promises
- 
+
  // app.post('/students', (req, res) => {
 //     res.send("Hello from server");
 //    // console.log(req.body);
@@ -36,9 +36,13 @@ app.get('/', (req, res) => {
 //?This way is using async await
 app.post("/students", async(req, res) => {
     try {
-        let user = new Student(req.body);
-        const result = await user.save();
-        res.status(201).send(result);
+        // let user = new Student(req.body);
+        // const result = await user.save();
+        //res.status(201).send(result);
+
+        const data = req.body;
+        const studentCreated = await Student.create(data);
+        res.status(201).send(studentCreated);
     } catch (error) {
         console.log(error);
         res.status(400).send(error.message);
