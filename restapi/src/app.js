@@ -75,6 +75,27 @@ app.get("/students/:id",async(req, res) => {
         res.status(201).send(result);
     } catch (error) {
         console.log(error);
+        res.status(500).send(error);
+    }
+})
+
+
+//? Update student data...
+app.patch('/students/:id',async(req, res) => {
+    try {
+        const _id = req.params.id;
+        const result = await Student.findByIdAndUpdate(_id,req.body,{
+            new:true
+        });
+        if(!result){
+            return res.status(404).send(result);
+        }else{
+            res.status(200).send(result);
+            console.log(result);
+            console.log("Data Upddated");
+        }
+    } catch (error) {
+        res.status(500).send(error);
     }
 })
 
