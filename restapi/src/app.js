@@ -49,6 +49,35 @@ app.post("/students", async(req, res) => {
     }
 })
 
+//? Getting all data from db
+app.get("/students",async(req, res) => {
+    try {
+        const result = await Student.find();
+        console.log(result);
+        res.status(201).send(result);
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error.message);
+    }
+})
+
+//? Getting data of particular student
+app.get("/students/:id",async(req, res) => {
+    try {
+        const id = req.params.id;
+        //here if we use find method then The find method in Mongoose returns an array of documents, even if only one document matches the query. So, when you check if (!result), it will be true if the array is empty, which may not be the expected behavior.
+        const result = await Student.findOne({_id:id});
+        if(!result){
+           return res.send("Data not found");
+        }
+        console.log("Data of single user");
+        console.log(result);
+        res.status(201).send(result);
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 app.listen(PORT,() => {
     console.log(`Server is running on port ${PORT}`);
 })
