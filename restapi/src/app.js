@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 
 */
 
-//?This way is using async await
+//? -------------------- This way is using async await to insert data in db ----------------------------------
 app.post("/students", async(req, res) => {
     try {
         // let user = new Student(req.body);
@@ -49,7 +49,7 @@ app.post("/students", async(req, res) => {
     }
 })
 
-//? Getting all data from db
+//? -------------------- Getting all data from db ---------------------------------
 app.get("/students",async(req, res) => {
     try {
         const result = await Student.find();
@@ -61,7 +61,7 @@ app.get("/students",async(req, res) => {
     }
 })
 
-//? Getting data of particular student
+//? ----------------------- Getting data of particular student --------------------------------------------------------
 app.get("/students/:id",async(req, res) => {
     try {
         const id = req.params.id;
@@ -80,7 +80,7 @@ app.get("/students/:id",async(req, res) => {
 })
 
 
-//? Update student data...
+//? ---------------------- Update student data ---------------------------------
 app.patch('/students/:id',async(req, res) => {
     try {
         const _id = req.params.id;
@@ -95,6 +95,23 @@ app.patch('/students/:id',async(req, res) => {
             console.log("Data Upddated");
         }
     } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+//? ------------------- delete the student from db -------------------------
+app.delete("/students/:id", async(req, res)=>{
+    try {
+        const _id = req.params.id;
+        const result = await Student.findByIdAndDelete(_id);
+        if(!result) {
+            return res.status(404).send(result);
+        }else{
+            res.status(200).send(result);
+            console.log("Data Deleted",result);
+        }
+    } catch (error) {
+        console.log(error);
         res.status(500).send(error);
     }
 })
