@@ -13,16 +13,36 @@ app.get('/', (req, res) => {
     res.send('Welcome');
 })
 
-app.post('/students', (req, res) => {
-    res.send("Hello from server");
-    console.log(req.body);
-    let user = new Student(req.body);
-    user.save().then(() => {
-        console.log("Data submitted");
-    }).catch((err) => {
-        console.log(err);
-    })
+
+
+/*
+
+ ? This is also a way using Promises
+ 
+ // app.post('/students', (req, res) => {
+//     res.send("Hello from server");
+//    // console.log(req.body);
+//     let user = new Student(req.body);
+//     user.save().then(() => {
+//         console.log("Data submitted");
+//     }).catch((err) => {
+//         console.log(err);
+//     })
     
+// })
+
+*/
+
+//?This way is using async await
+app.post("/students", async(req, res) => {
+    try {
+        let user = new Student(req.body);
+        const result = await user.save();
+        res.status(201).send(result);
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error.message);
+    }
 })
 
 app.listen(PORT,() => {
