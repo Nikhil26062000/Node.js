@@ -8,11 +8,21 @@ mongoose.connect("mongodb://localhost:27017/tempdata").then(()=>console.log("Con
 const userSchema = new mongoose.Schema({
     name: {
       type: String,
-      required: true
+      required: true,
+      validate(value){
+        if(value.length<3){
+            throw new Error("Name should be atleast 3 characters long");
+        }
+      }
     },
     age: {
       type: Number,
-      required: true
+      required: true,
+      validate(value){
+        if(value<0){
+            throw new Error("Age should not be negative");
+        }
+      }
     },
     email: {
       type: String,
@@ -24,21 +34,21 @@ const userSchema = new mongoose.Schema({
   const User = new mongoose.model("User",userSchema);
 
   //?creating document
-//  const createDocument = async() => {
-//     try {
-//         const userFirst = new User({
-//             name:"User3",
-//             age:30,
-//             email:"user3@gmail.com"
-//       })
-//       const result = await userFirst.save();
-//       console.log(result)
-//     } catch (error) {
-//         console.log(error);
-//     }
-//  }
+ const createDocument = async() => {
+    try {
+        const userFirst = new User({
+            name:"Ram",
+            age:30,
+            email:"Ram@gmail.com"
+      })
+      const result = await userFirst.save();
+      console.log(result)
+    } catch (error) {
+        console.log(error);
+    }
+ }
 
-//  createDocument();
+ createDocument();
 
 
 //?Inserting multiple documents at a time
@@ -67,7 +77,19 @@ const insertDocuments=async ()=>{
     }
 }
 
-insertDocuments();
+// insertDocuments();
+
+//? Reading data from database...
+const getData = async () => {
+    try {
+        const results = await User.find();
+        console.log("Data from Database ------------->",results);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// getData();
 
 
 
