@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 mongoose.connect("mongodb://localhost:27017/tempdata").then(()=>console.log("Connection successful..."))
 .catch((err)=>console.log(err));
@@ -27,7 +28,12 @@ const userSchema = new mongoose.Schema({
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      validate(value){
+        if(!validator.isEmail(value)){
+            throw new Error("Email is not valid");
+        }
+      }
     }
   });
 
@@ -37,9 +43,9 @@ const userSchema = new mongoose.Schema({
  const createDocument = async() => {
     try {
         const userFirst = new User({
-            name:"Ram",
+            name:"Shyam",
             age:30,
-            email:"Ram@gmail.com"
+            email:"Shyam@gmail.com"
       })
       const result = await userFirst.save();
       console.log(result)
